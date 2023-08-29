@@ -42,7 +42,7 @@ mod test {
     fn test_contract_view() {
         let dispatcher = deploy_contract();
         let owner = dispatcher.get_owner();
-        assert('Joe' == dispatcher.get_owner(), 'Joe should be the owner.');
+        assert(owner == 'Joe', 'Joe should be the owner.');
     }
 
     fn deploy_contract() -> IJoesContractDispatcher {
