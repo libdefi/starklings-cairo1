@@ -7,20 +7,21 @@
 // in the signatures for now. If anything, this is a good way to peek ahead
 // to future exercises!)
 
-// I AM NOT DONE
 use debug::PrintTrait;
 
 fn main() {
-    let original_price = 51;
+    let original_price: u32 = 51;
     sale_price(original_price).print();
 }
 
-fn sale_price(price: u32) -> {
+fn sale_price(price: u32) -> u32 {
+    let mut number = 0;
     if is_even(price) {
-        price - 10
+        number = price - 10
     } else {
-        price - 3
+        number = price - 3
     }
+    number
 }
 
 fn is_even(num: u32) -> bool {

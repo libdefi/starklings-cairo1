@@ -12,7 +12,6 @@ fn sum_u8s(x: u8, y: u8) -> u8 {
     x + y
 }
 
-//TODO modify the types of this function to prevent an overflow when summing big values
 fn sum_big_numbers(x: u256, y: u256) -> u256 {
     x + y
 }

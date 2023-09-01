@@ -2,12 +2,19 @@
 // Address all the TODOs to make the tests pass!
 // Execute `starklings hint enums3` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
 
 use debug::PrintTrait;
 
 #[derive(Drop, Copy)]
 enum Message { // TODO: implement the message variant types based on their usage below
+    // state.process(Message::ChangeColor((255, 0, 255)));
+    // state.process(Message::Echo('hello world'));
+    // state.process(Message::Move(Point { x: 10, y: 15 }));
+    // state.process(Message::Quit(()));
+    Quit: (),
+    Echo: felt252,
+    Move: ( Point,),
+    ChangeColor: (u128, u128, u128),
 }
 
 #[derive(Drop, Copy)]
