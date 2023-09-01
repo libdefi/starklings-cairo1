@@ -7,13 +7,9 @@ use debug::PrintTrait;
 
 #[derive(Drop, Copy)]
 enum Message { // TODO: implement the message variant types based on their usage below
-    // state.process(Message::ChangeColor((255, 0, 255)));
-    // state.process(Message::Echo('hello world'));
-    // state.process(Message::Move(Point { x: 10, y: 15 }));
-    // state.process(Message::Quit(()));
     Quit: (),
     Echo: felt252,
-    Move: ( Point,),
+    Move: Point,
     ChangeColor: (u128, u128, u128),
 }
 
@@ -25,20 +21,20 @@ struct Point {
 
 #[derive(Drop, Copy)]
 struct State {
-    color: (u8, u8, u8),
+    color: (u128, u128, u128),
     position: Point,
     quit: bool,
 }
 
 trait StateTrait {
-    fn change_color(ref self: State, new_color: (u8, u8, u8));
+    fn change_color(ref self: State, new_color: (u128, u128, u128));
     fn quit(ref self: State);
     fn echo(ref self: State, s: felt252);
     fn move_position(ref self: State, p: Point);
     fn process(ref self: State, message: Message);
 }
 impl StateImpl of StateTrait {
-    fn change_color(ref self: State, new_color: (u8, u8, u8)) {
+    fn change_color(ref self: State, new_color: (u128, u128, u128)) {
         let State{color, position, quit, } = self;
         self = State { color: new_color, position: position, quit: quit,  };
     }
@@ -59,7 +55,20 @@ impl StateImpl of StateTrait {
     fn process(
         ref self: State, message: Message
     ) { // TODO: create a match expression to process the different message variants
-    // Remember: When passing a tuple as a function argument, you'll need extra parentheses: fn function((t, u, p, l, e))
+        match message { 
+            Message::Quit(()) => {
+                self.quit = true;
+            },
+            Message::Echo(value) => {
+                value.print();
+            },
+            Message::Move(value) => {
+                self.position = value;
+            },
+            Message::ChangeColor(value) => {
+                self.color = value;
+            },
+        }
     }
 }
 
@@ -79,15 +88,15 @@ fn test_match_message_call() {
 }
 
 
-impl TripleTuplePartialEq of PartialEq<(u8, u8, u8)> {
-    #[inline(always)]
-    fn eq(lhs: (u8, u8, u8), rhs: (u8, u8, u8)) -> bool {
-        let (a0, a1, a2) = lhs;
-        let (b0, b1, b2) = rhs;
-        a0 == b0 & a1 == b1 & a2 == b2
-    }
-    #[inline(always)]
-    fn ne(lhs: (u8, u8, u8), rhs: (u8, u8, u8)) -> bool {
-        !(lhs == rhs)
-    }
-}
+// impl TripleTuplePartialEq of PartialEq<(u8, u8, u8)> {
+//     #[inline(always)]
+//     fn eq(lhs: (u8, u8, u8), rhs: (u8, u8, u8)) -> bool {
+//         let (a0, a1, a2) = lhs;
+//         let (b0, b1, b2) = rhs;
+//         a0 == b0 & a1 == b1 & a2 == b2
+//     }
+//     #[inline(always)]
+//     fn ne(lhs: (u8, u8, u8), rhs: (u8, u8, u8)) -> bool {
+//         !(lhs == rhs)
+//     }
+// }
