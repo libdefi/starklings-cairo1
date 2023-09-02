@@ -85,7 +85,7 @@ mod test {
     }
 
     #[test]
-    #[available_gas(20000000000)]
+    #[available_gas(2000000000)]
     fn test_stock() {
         let dispatcher = deploy_contract();
         let owner = util_felt_addr('Elizabeth');
@@ -104,7 +104,7 @@ mod test {
     }
 
     #[test]
-    #[available_gas(2000000000)]
+    #[available_gas(200000000000)]
     fn test_stock_purchase() {
         let owner = util_felt_addr('Elizabeth');
         let dispatcher = deploy_contract();

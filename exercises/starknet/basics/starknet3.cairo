@@ -36,19 +36,18 @@ mod ProgressTracker {
     impl ProgressTrackerImpl of super::IProgressTracker<ContractState> {
         fn set_progress(
             ref self: ContractState, user: ContractAddress, new_progress: u16
-        ) { // TODO: assert owner is calling
-        // TODO: set new_progress for user,
-            let caller_address = get_caller_address(); // 現在の呼び出し元のアドレスを取得
+        ) { 
+            let caller_address = get_caller_address(); 
             assert(self.get_contract_owner() == caller_address, 'Not owner'); 
             self.progress.write(user, new_progress);
         }
 
         fn get_progress(self: @ContractState, user: ContractAddress) -> u16 { 
-            self.progress.read(user)
+            return self.progress.read(user);
         }
 
         fn get_contract_owner(self: @ContractState) -> ContractAddress {
-            self.contract_owner.read()
+            return self.contract_owner.read();
         }
     }
 }
