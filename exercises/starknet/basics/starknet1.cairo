@@ -14,6 +14,7 @@ mod JoesContract {
     #[storage]
     struct Storage {}
 
+    #[external(v0)]
     impl IJoesContractImpl of super::IJoesContract<ContractState> {
         fn get_owner(self: @ContractState) -> felt252 {
             'Joe'
@@ -39,18 +40,18 @@ mod test {
     #[test]
     #[available_gas(2000000000)]
     fn test_contract_view() {
-        let dispatcher = deploy_contract();
-        let owner = dispatcher.get_owner();
-        assert('Joe' == dispatcher.get_owner(), 'Joe should be the owner.');
+        let owner = deploy_contract();
+        assert('Joe' == owner, 'Joe should be the owner.');
     }
 
-    fn deploy_contract() -> IJoesContractDispatcher {
+    fn deploy_contract() -> felt252 {
         let mut calldata = ArrayTrait::new();
         let (address0, _) = deploy_syscall(
             JoesContract::TEST_CLASS_HASH.try_into().unwrap(), 0, calldata.span(), false
         )
             .unwrap();
         let contract0 = IJoesContractDispatcher { contract_address: address0 };
-        contract0
+        let a = contract0.get_owner();
+        a
     }
 }
